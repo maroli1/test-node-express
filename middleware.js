@@ -5,4 +5,13 @@ function validateUserId(req, res, next) {
     }
     next();
 }
-module.exports = validateUserId;
+
+function validateEmail(req, res, next) {
+    const email = req.body.email;
+    if (!email || typeof email !== "string" || !email.includes("@")) {
+        return res.status(400).json({ error: "ایمیل نامعتبر است" });
+    }
+    next();
+}
+
+module.exports = { validateUserId, validateEmail };
