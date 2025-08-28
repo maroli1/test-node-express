@@ -1,8 +1,8 @@
 {
   "name": "test-node-express",
   "version": "1.0.0",
-  "description": "const users = [\r     {id:1,name:'ali',email:\"ali55@gmail.com\"};\r     {id:2,name:\"zahra\",email:\"zahra1@gmail.com\"};\r     {id:3,name:\"maryam\",email:\"mary1@gmail.com\"};\r ];\r module.express = users;",
-  "main": "index.js",
+  "description": "",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
