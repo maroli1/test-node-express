@@ -27,7 +27,7 @@ app.post("/users/email", middlewares.validateEmail, (req, res) => {
 app.post("/users/name", (req, res) => {
   const name = req.body.name;
   const user = users.find(u => u.name === name);
-  if (!user) return res.status(404).json({ error: "User not found" });
+  if (!user) return res.status(404).json({ error: "User nott found" });
   res.json(user);
 });
 
