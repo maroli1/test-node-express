@@ -31,7 +31,18 @@ app.post("/users/name", (req, res) => {
   res.json(user);
 });
 
-
+app.post("/users", (req, res) => {
+  const { name, email } = req.body;
+  if (!name || !email) {
+    return
+     res.status(400).json({ error: "name and email are required" });
+  }
+  const newId = users.length ? Math.max(...users.map(u => u.id)) + 1 : 1;
+  const newUser =
+   { id: newId, name, email };
+ users.push(newUser);
+ res.status(201).json(newUser);
+});
 
 app.listen(PORT, () => {
   console.log(`server is running on http://localhost:${PORT}`
