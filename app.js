@@ -57,6 +57,16 @@ app.put("/users/:id", validateUserId, (req, res) => {
   res.json(user);
 });
 
+app.delete("/users/:id", validateUserId,
+   (req, res) => { const userId = Number(req.params.id);
+  const idx = users.findIndex(u => u.id === userId);
+  if (idx === -1)
+   return 
+  res.status(404).json({ error: "User not found" });
+  const removed = users.splice(idx, 1)[0];
+  res.json({ message: "User deleted", user: removed });
+});
+
 
 app.listen(PORT, () => {
   console.log(`server is running on http://localhost:${PORT}`
