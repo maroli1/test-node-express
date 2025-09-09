@@ -40,11 +40,16 @@ app.post("/users",(req,res)=>{
     res.status(400).json ({error:"name and email are required"});
   }
 
-const newid =users.length +1;
+const newid =users.length ?
+Math.max(...users.map(u => u.id))
++1:1
 const newuser = {id : newid,name,email};
 users.push(newuser);
 res.status(201).json(newuser);
 });
+
+
+
 app.listen(PORT, () => {
   console.log(`server is running on http://localhost:${PORT}`
   )});
