@@ -31,6 +31,20 @@ app.post("/users/name", (req, res) => {
   res.json(user);
 });
 
+app.use(express.json());
+
+app.post("/users",(req,res)=>{
+  const {name,email}=req.body;
+  if (!name || !email)
+  {return
+    res.status(400).json ({error:"name and email are required"});
+  }
+
+const newid =users.length +1;
+const newuser = {id : newid,name,email};
+users.push(newuser);
+res.status(201).json(newuser);
+});
 app.listen(PORT, () => {
   console.log(`server is running on http://localhost:${PORT}`
   )});
