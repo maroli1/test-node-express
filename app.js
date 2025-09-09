@@ -44,6 +44,20 @@ app.post("/users", (req, res) => {
  res.status(201).json(newUser);
 });
 
+
+app.put("/users/:id", validateUserId, (req, res) => {
+  const userId = Number(req.params.id);
+  const { name, email } = req.body;
+  const user = users.find(u => u.id === userId);
+  if (!user) 
+    return
+   res.status(404).json({ error: "User not found" });
+  if (name) user.name = name;
+  if (email) user.email = email;
+  res.json(user);
+});
+
+
 app.listen(PORT, () => {
   console.log(`server is running on http://localhost:${PORT}`
   )});
