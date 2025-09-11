@@ -1,73 +1,65 @@
 const express = require("express");
 const users = require("./users");
-const middleware = require("./middleware");
-const bodyParser = require("body-parser");
+const { validateUserId, validateEmail } = require("./middleware");
+
 const app = express();
 const PORT = 3000;
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.get("/users", (req, res) => {
   res.json(users);
 });
-app.get("/users/:id", middlewares.validateUserId, (req, res) => {
+
+app.get("/users/:id", validateUserId, (req, res) => {
   const userId = Number(req.params.id);
   const user = users.find(u => u.id === userId);
-  if (!user) 
-    return res.status(404).json({ error: "User not found" });
+  if (!user) return res.status(404).json({ error: "کاربر پیدا نشد" });
   res.json(user);
 });
 
-app.post("/users/email", middlewares.validateEmail, (req, res) => {
+app.post("/users/email", validateEmail, (req, res) => {
   const email = req.body.email;
   const user = users.find(u => u.email === email);
-  if (!user)
-     return res.status(404).json({ error: "User not found" });
+  if (!user) return res.status(404).json({ error: "کاربر پیدا نشد" });
   res.json(user);
 });
 
 app.post("/users/name", (req, res) => {
   const name = req.body.name;
   const user = users.find(u => u.name === name);
-  if (!user) 
-    return res.status(404).json({ error: "User nott found" });
+  if (!user) return res.status(404).json({ error: "کاربر پیدا نشد" });
   res.json(user);
 });
 
 app.post("/users", (req, res) => {
   const { name, email } = req.body;
   if (!name || !email) {
-    return  res.status(400).json({ error: "name and email are required" });
+    return res.status(400).json({ error: "نام و ایمیل الزامی است" });
   }
   const newId = users.length ? Math.max(...users.map(u => u.id)) + 1 : 1;
-  const newUser =
-   { id: newId, name, email };
- users.push(newUser);
- res.status(201).json(newUser);
+  const newUser = { id: newId, name, email };
+  users.push(newUser);
+  res.status(201).json(newUser);
 });
 
-
-app.put("/users/:id",middlewares.validateUserId, (req, res) => {
+app.put("/users/:id", validateUserId, (req, res) => {
   const userId = Number(req.params.id);
   const { name, email } = req.body;
   const user = users.find(u => u.id === userId);
-  if (!user) 
-    return res.status(404).json({ error: "User not found" });
+  if (!user) return res.status(404).json({ error: "کاربر پیدا نشد" });
   if (name) user.name = name;
   if (email) user.email = email;
   res.json(user);
 });
 
-app.delete("/users/:id", middlewares.validateUserId,
-   (req, res) => { const userId = Number(req.params.id);
+app.delete("/users/:id", validateUserId, (req, res) => {
+  const userId = Number(req.params.id);
   const idx = users.findIndex(u => u.id === userId);
-  if (idx === -1)
-     return res.status(404).json({ error: "User not found" });
+  if (idx === -1) return res.status(404).json({ error: "کاربر پیدا نشد" });
   const removed = users.splice(idx, 1)[0];
-  res.json({ message: "User deleted", user: removed });
-});
-
-
+  res.json({ message: "کاربر حذف شد", user: removed });
+})
 app.listen(PORT, () => {
-  console.log(`server is running on http://localhost:${PORT}`
-  )});
+  console.log("✅ Server is running on http://localhost:${PORT}");
+});
