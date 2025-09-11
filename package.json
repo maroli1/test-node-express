@@ -19,5 +19,6 @@
   "homepage": "https://github.com/maroli1/test-node-express#readme",
   "dependencies": {
     "express": "^5.1.0"
-  }
+  },
+  "devDependencies": {}
 }
