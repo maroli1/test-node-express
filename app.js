@@ -1,6 +1,6 @@
 const express = require("express");
 const users = require("./users");
-const middleware = require("./middleware");
+const middleware = require("./middlewares");
 const bodyParser = require("body-parser");
 const app = express();
 const PORT = 3000;
